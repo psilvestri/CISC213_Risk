@@ -1,3 +1,6 @@
+//Zachary Lippincott 
+//4/30/19
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -78,7 +81,7 @@ public class Startup extends Application {
 		pane.getChildren().addAll(confirm, colors, players, playerText, colorText);
 
 		Scene scene = new Scene(pane, 600, 300);
-		stage.setTitle("Risk Setup");
+		stage.setTitle("Risk Setup (Chess)");
 		stage.setScene(scene);
 		stage.show();
 
