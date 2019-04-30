@@ -1,129 +1,102 @@
+
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
- * @author Peter Silvestri
- * @date 4/15/2019
+ * @author Owner
  *
  */
 public class Battle {
 
-	// Initialize attackValue and defenseValue arrayList
-	static ArrayList<Integer> attackValue = new ArrayList<>();
-	static ArrayList<Integer> defenseValue = new ArrayList<>();
-	static int attackingUnits = Territory.getUnits(); // getUnits from territory A (attacking)
-	static int defendingUnits = Territory.getUnits(); // getUnits from territory B (defending)
+	ArrayList<Integer> attack = new ArrayList<Integer>();
+	ArrayList<Integer> defense = new ArrayList<Integer>();
+	private int attackLoss;
+	private int defenseLoss;
 
-	public static int attackRoll() {
-		// Declare variables
-		int attackingDice = 0;
+	// method called when new attack is initialized
+	public void newAttack(int atk, int def) {
+		Random rand = new Random();
+		Integer num = 0;
+		// previous values cleared
+		attackLoss = 0;
+		defenseLoss = 0;
+		attack.clear();
+		defense.clear();
+		// attack and defense arrays filled with random values 1 - 6
+		for (int i = 0; i < atk; i++) {
+			attack.add(rand.nextInt(5) + 1);
+		}
+		for (int i = 0; i < def; i++) {
+			defense.add(rand.nextInt(5) + 1);
+		}
 
-		// Clear values in arrayList in case of previous battles.
-		attackValue.clear();
-		defenseValue.clear();
+		// attack array sorted
+		for (int i = 0; i < atk; i++) {
+			for (int j = 0; j < atk - 1; j++) {
+				if (attack.get(i) > attack.get(j)) {
+					num = attack.get(i);
+					attack.set(i, attack.get(j));
+					attack.set(j, num);
+				}
+			}
+		}
 
-		// Ask attacking player how many units they want to use
-		System.out.println("How many dice would the attacker like to use?");
-
-		// Determine number of attack dice rolled.
-		Scanner scAtt = new Scanner(System.in);
-		int confirmAttDice = scAtt.nextInt();
-		scAtt.close();
-
-		// Determine if the attacker input is valid
-		if (confirmAttDice > 3) {
-			System.out.println("The attacker may only use up to three dice.");
-			return attackRoll();
-		} else if (confirmAttDice < 1) {
-			System.out.println("You need to assign at least one unit to attack.");
-			return attackRoll();
-		} else if (attackingUnits - confirmAttDice < 1) {
-			System.out.println("There are not enough units in the territory to perform this action.");
-			return attackRoll();
-		} else {
-			attackingDice = confirmAttDice - 1;
-			System.out.println("The attacker will use " + attackingDice + " dice.");
-			return attackingDice;
+		// defense array sorted
+		for (int i = 0; i < def; i++) {
+			for (int j = 0; j < def; j++) {
+				if (defense.get(i) > defense.get(j)) {
+					num = defense.get(i);
+					defense.set(i, attack.get(j));
+					defense.set(j, num);
+				}
+			}
 		}
 	}
 
-	public static int defenseRoll() {
-
-		int defendingDice = 0;
-
-		// Ask defending player how many units they want to use
-		System.out.println("How many dice would the defender like to use?");
-
-		// Determine number of defense dice rolled.
-		Scanner scDef = new Scanner(System.in);
-		int confirmDefDice = scDef.nextInt();
-		scDef.close();
-
-		// Determine if defender input is valid
-		if (confirmDefDice > 2) {
-			System.out.println("The defender can use a maximum of two dice");
-			return defenseRoll();
-		} else if (confirmDefDice < 1) {
-			System.out.println("The defender must use at least one die.");
-			return defenseRoll();
-		} else {
-			defendingDice = confirmDefDice;
-			System.out.println("The defender will use " + defendingDice + " dice.");
-			return defendingDice;
+	// method for printing the arrays for testing
+	public void printArrays() {
+		for (int i = 0; i < 3; i++) {
+			System.out.println(attack.get(i));
+		}
+		for (int i = 0; i < 2; i++) {
+			System.out.println(defense.get(i));
 		}
 	}
 
-	public static void fight() {
-
-		// Initialize Random for usage
-		Random random = new Random();
-
-		// Place dice results into attackValue and defenseValue arrayLists.
-		// Dice roll will have random value between 1 and 6
-		for (int i = 0; i < attackRoll(); i++) {
-			int rollDice = random.nextInt(6);
-			rollDice += 1;
-			attackValue.add(rollDice);
+	// method for calculating the battle results. Number of attack and defense dice
+	// used are inputed into the method.
+	public void calculateBattle(int atkDice, int defDice) {
+		// the maximum amount of attacks is equal to the number of defense dice so the
+		// for
+		// loop is executed defDice number of times.
+		newAttack(atkDice, defDice);
+		for (int i = 0; i < defDice; i++) {
+			if (attack.get(i) > defense.get(i)) {
+				defenseLoss++;
+			} else if (attack.get(i) < defense.get(i)) {
+				attackLoss++;
+			} else if (attack.get(i) == defense.get(i)) {
+				attackLoss++;
+			}
 		}
-
-		for (int i = 0; i < defenseRoll(); i++) {
-			int rollDice = random.nextInt(6);
-			rollDice += 1;
-			defenseValue.add(rollDice);
-		}
-
-		// Sort dice results from largest to smallest.
-		Collections.sort(attackValue, Collections.reverseOrder());
-		Collections.sort(defenseValue, Collections.reverseOrder());
-
-		// Compare largest attack roll to largest defense roll.
-		if (attackValue.get(0) > defenseValue.get(0)) {
-			defendingUnits -= 1;
-			Territory.setUnits(defendingUnits);
-		} else if (attackValue.get(0) < defenseValue.get(0)) {
-			attackingUnits -= 1;
-			Territory.setUnits(attackingUnits);
-		}
-
-		// Compare next largest...
-		if (attackValue.get(1) > defenseValue.get(1)) {
-			defendingUnits -= 1;
-			Territory.setUnits(defendingUnits);
-		} else if (attackValue.get(1) < defenseValue.get(1)) {
-			attackingUnits -= 1;
-			Territory.setUnits(attackingUnits);
-		}
-
-		// Compare last...
-		if (attackValue.get(2) > defenseValue.get(2)) {
-			defendingUnits -= 1;
-			Territory.setUnits(defendingUnits);
-		} else if (attackValue.get(2) < defenseValue.get(2)) {
-			attackingUnits -= 1;
-			Territory.setUnits(attackingUnits);
-		}
-
 	}
+
+	// Getters and setters
+	public int getAttackLoss() {
+		return attackLoss;
+	}
+
+	public void setAttackLoss(int attackLoss) {
+		this.attackLoss = attackLoss;
+	}
+
+	public int getDefenseLoss() {
+		return defenseLoss;
+	}
+
+	public void setDefenseLoss(int defenseLoss) {
+		this.defenseLoss = defenseLoss;
+	}
+
 }

@@ -1,164 +1,74 @@
 
-/**
- * 
- */
-import java.util.*;
-/**
- * @author David Amos
- *
- */
-public class Player implements GameObject{
 
-	Scanner scan;
-	
-	String PlayerColor;
-	
-	static ArrayList<String> ColorList;
-	
-	int choice;
-	
-	static int TurnOrder = 1;
-	
-	int PlayerTurn;
-	
-	int territoriesOwned;
-	
-	int unitsOwned;
-	
-	boolean didWin = false;
-	
-	boolean myTurn = false;
-	
-	
-	public Player() {
-		
-		scan = new Scanner(System.in);
-		
-		//create color list for users to pick from
-		ColorList = new ArrayList<>();	
-		
-		//add colors to color list
-		ColorList.add("Red");
-		ColorList.add("Blue");
-		ColorList.add("Green");
-		ColorList.add("Yellow");
-		ColorList.add("Brown");
-		ColorList.add("Pink");
+import java.util.ArrayList;
+import java.util.Collections;
+
+import javafx.scene.paint.Color;
+
+public class Player {
+
+	private Color pColor = null;
+	private ArrayList<Integer> tersOwned = new ArrayList<Integer>();
+	int unplayedUnits = 0;
+
+	Player(Color color) {
+		setpColor(color);
 	}
-	
-	public void setColorSelection() {
-		
-		//prompt color choice
-		System.out.println("Please pick one of the following colors");
-		
-		int index = 0;
-		
-		for (String colors : ColorList) {
-			
-			//prompt/display colors
-			//Enter index to select color
-			System.out.println("Enter " + index + " to select " + colors);
 
-			index++; 
+	public Color getpColor() {
+		return pColor;
+	}
+
+	public void setpColor(Color pColor) {
+		this.pColor = pColor;
+	}
+
+	// Adds the territory won to the owned territory array list then the array list
+	// is sorted.
+	public void terWon(int terID) {
+		tersOwned.add(terID);
+		Collections.sort(tersOwned);
+	}
+
+	/*
+	 * method uses binary search to search the array list of territories owned for
+	 * the territory lost. The territory is then removed from the owned territory
+	 * array list.
+	 */
+	public void terLost(int terID) {
+		int low = 0;
+		int high = tersOwned.size() - 1;
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			if (tersOwned.get(mid) < terID) {
+				low = mid + 1;
+			} else if (tersOwned.get(mid) > terID) {
+				high = mid - 1;
+			} else if (tersOwned.get(mid) == terID) {
+				tersOwned.remove(mid);
+				break;
 			}
-		
-		choice = scan.nextInt();
-		
-		PlayerColor = ColorList.get(choice);
-		
-		//remove the color from the list so it no longer available to other players
-		ColorList.remove(choice);
-	}
-	
-	public ArrayList<String> getColorList() {
-		return ColorList;
-	}
-	
-	
-	public String getPlayerColor() {
-		
-		return PlayerColor;
-	}
-	
-	public void setPlayerTurn(int NumberPlayers) {
-		
-		PlayerTurn = TurnOrder;
-		TurnOrder++;
-	}
-	
-	public int getPlayerTurn() {
-		
-		return PlayerTurn;
-	}
-	public static int getTurnOrder() {
-		
-		return TurnOrder;
-	}
-
-	/**
-	 * @return the territoriesOwned
-	 */
-	public int getTerritoriesOwned() {
-		return territoriesOwned;
-	}
-	/**
-	 * @param territoriesOwned the territoriesOwned to set
-	 */
-	public void setTerritoriesOwned(int territoriesOwned) {
-		this.territoriesOwned = territoriesOwned;
-	}
-	/**
-	 * @return the unitsOwned
-	 */
-	public int getUnitsOwned() {
-		return unitsOwned;
-	}
-	/**
-	 * @param unitsOwned the unitsOwned to set
-	 */
-	public void setUnitsOwned(int unitsOwned) {
-		this.unitsOwned = unitsOwned;
-	}
-	/**
-	 * @return the didWin
-	 */
-	public boolean isDidWin() {
-		return didWin;
-	}
-	/**
-	 * @param didWin the didWin to set
-	 */
-	public void setDidWin(boolean didWin) {
-		this.didWin = didWin;
-	}
-	/**
-	 * @return the myTurn
-	 */
-	public boolean isMyTurn() {
-		return myTurn;
-	}
-	/**
-	 * @param myTurn the myTurn to set
-	 */
-	public void setMyTurn(boolean myTurn) {
-		this.myTurn = myTurn;
-	}
-	
-	// Method to check if the player has won
-	private void checkWin(int territoryAmount)
-	{
-		// If they hold all the territories they win
-		if (territoryAmount == 42)	// Compares their amount of owned territories to the max possible
-		{
-			didWin = true;	// Sets didWin to true
 		}
-		
 	}
 
-	@Override
-	public String toString() {
-		return "Player [scan=" + scan + ", PlayerColor=" + PlayerColor + ", choice=" + choice + ", PlayerTurn="
-				+ PlayerTurn + ", territoriesOwned=" + territoriesOwned + ", unitsOwned=" + unitsOwned + ", didWin="
-				+ didWin + ", myTurn=" + myTurn + "]";
+	public boolean isOwned(int terID) {
+		int low = 0;
+		int high = tersOwned.size() - 1;
+		int runs = 0;
+		while (low <= high && runs < tersOwned.size()) {
+			int mid = (low + high) / 2;
+			if (tersOwned.get(mid) < terID) {
+				low = mid + 1;
+			} else if (tersOwned.get(mid) > terID) {
+				high = mid - 1;
+			} else if (tersOwned.get(mid) == terID) {
+				return true;
+			}
+			runs++;
+		}
+		return false;
 	}
+	
+	
+
 }
