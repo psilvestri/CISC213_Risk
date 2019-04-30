@@ -1,0 +1,128 @@
+ import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * @author: Peter Silvestri
+ * 
+ */
+
+public class Turn {
+	
+	static ArrayList<Player> currentPlayer = new ArrayList<>();//still havent used yet...
+	Player player = new Player();
+	Scanner scan;
+	int Reinforcements;
+	static int participants = 0;
+	static int Turn = 1;
+	
+	//turn should get Territories owned from players to determine the amount
+	//of troops obtained at the beginning of the round
+	public Turn() {
+		scan = new Scanner(System.in);
+	}
+	
+	public static void setParticipants() {				//former name of method --> firstTurn() {
+
+		System.out.println("How many people will be playing? Max of 6!");
+		Scanner scan = new Scanner(System.in);
+		participants = scan.nextInt();
+	}
+	
+	public static int getParticipants() {
+		
+		return participants;
+	}
+	
+	public static void changeCurrentPlayer(Player[] player) {
+
+		System.out.println("Whoever turn is " + Turn + " it is your turn");
+		//Whoever turn is Turn it is your turn********************************************
+		//starts at 1, a turn order of zero will not allow anything
+
+		System.out.println(player[Turn - 1].getPlayerColor() + " it is your turn!");//1st R0 2nd R1 3rd R2
+		//refers to the player as their color... 
+		//Color it is your turn!**********************************************************
+		
+		
+		
+		
+		//tester
+		//control turns/actions within here?
+		
+		//stuff happens within this method which can be what we base most actions if not all actions from
+		
+		
+		
+
+		//resets turn order to the first player once the max amount of turns has occurred
+		Turn++;
+		if((Turn - 1) == player.length) {
+
+			Turn = 1;
+		}
+	
+		
+	//we made this static for a reason, we probably sent the array of players into with a reason as well	
+	}
+	
+	public int victory(Player[] player) {
+		
+		//boolean didAnyoneWin = false;
+		int Winner = 0;
+		
+		for(int idkname = 0; idkname < player.length; idkname++) {
+			
+			if(player[idkname].isDidWin() == true) {
+				
+				Winner = 1;
+			}
+			
+		}
+		
+		return Winner;
+	}
+
+	public void callReinforce() {
+		//if territories owned is < 3
+		//always give 1 troop
+		
+		if(player.getTerritoriesOwned() < 3) {
+			
+			Reinforcements = 1;
+		}
+		
+		//else territories# / 3
+		else {
+			
+			Reinforcements = player.getTerritoriesOwned() / 3;
+		}
+		
+		System.out.println("Reinforcements are added.");
+	}
+
+	public static void callBattle() {
+
+		char newBattle;
+
+		do {
+			System.out.println("Would you like to battle? (y / n)");
+			Scanner checkBattle = new Scanner(System.in);
+			newBattle = checkBattle.next().charAt(0);
+			System.out.println("Call battle class.");
+		} while (newBattle == 'y');
+	}
+
+	public static void callFortify() {
+
+		char newFortify;
+		System.out.println("Would you like to fortify? (y / n)");
+		Scanner checkFortify = new Scanner(System.in);
+		newFortify = checkFortify.next().charAt(0);
+
+		if (newFortify == 'y') {
+			System.out.println("Call fortify class.");
+		} else {
+			System.out.println("No fortify action taken this turn.");
+		}
+	}
+}
