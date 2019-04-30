@@ -1,0 +1,131 @@
+//import java.util.Scanner;
+import java.util.*;
+public class TestMain {
+	
+	static Scanner scan;// = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+				
+		//initialize Turn class
+		Turn turn = new Turn();
+		
+		//method will prompt and set participants/number of players playing
+		Turn.setParticipants();
+
+		//Player Object Array initialized based on the amount set by set participants/user(s)
+		Player[] player = new Player[Turn.getParticipants()];
+		
+		//initialize player array, each element is an instance of the player class
+		for(int p = 0; p < Turn.participants; p++) {
+			
+			player[p] = new Player();
+			
+			//sets each players territories to one******** (one is subject to change)**************
+			player[p].setTerritoriesOwned(1);
+		}
+
+		//loop through set player color method, for each player
+		for(int c = 0; c < Turn.participants; c++) {
+		
+			player[c].setPlayerColor(c);
+		}
+		
+		//loops through players and tells us how many territories
+		//*test this, test this, test this, so far tested with 3 works as expected*
+		for(int to = 0; to < Turn.participants; to++) {
+			
+			System.out.println(player[to].getPlayerColor() + " owns this many territories " + player[to].getTerritoriesOwned());
+			//Print: player (referred to as) color owns this many territories getTerritoresOwned
+		}
+		
+		//loops through players and set each players order in the rotation
+		for(int t = 0; t < Turn.participants; t++) {
+			
+			//calls setPlayerTurn which assigns the PlayerTurn field
+			//based on TurnOrder which is a static field that increments
+			//every time setPlayerTurn is called, so every players turn in
+			//the rotation is unique
+			player[t].setPlayerTurn();
+			System.out.println(player[t].getPlayerColor() + " will be turn number " + player[t].getPlayerTurn());
+			//Print:	Color will be turn number getPlayerTurn
+		}
+		
+		
+		
+		//if a player does not own any territories, then they lost.
+		//if they lost, then set that player's turn to zero
+		//if a players turn is zero well then they cannot make any moves
+		
+	while(turn.victory(player) == 0) {//******need to test this
+			//loops through each player by turn
+			for(int change = 0; change < player.length; change++) {
+			
+			
+				//if player Territories owned is already set to zero
+				if(player[change].getTerritoriesOwned() == 0) {
+				
+					//Print: Color does not own any Territories, they are eliminated!
+					System.out.println(player[change].getPlayerColor() + " does not own any Territories, " +
+																	 "they are eliminated!");
+				
+					//zero territories = turn order zero, we will not allow that player to do anything at this point.
+					player[change].setPlayerTurn(0);
+				
+				
+					//loop to reset anyones turn past the person who has lost**************need to test
+					for(int reset = 0; reset < player.length; reset++) {
+					
+						if(player[reset].getPlayerTurn() > player[change].getPlayerTurn()) {
+						
+							player[reset].setPlayerTurn(player[reset].getPlayerTurn() - 1); 
+						}
+					}
+
+				}
+			
+				else {
+					//send player array in order to access the player color within Turn.changeCurrentPlayer method
+
+					Turn.changeCurrentPlayer(player);
+					System.out.println(player[change].getPlayerColor());
+					turn.callReinforce();
+					Turn.callBattle();
+					Turn.callFortify();
+				
+				}//end of loop --- which the original intent was to simply change players, so add functionality to this
+		}
+	}
+	
+		/*player class
+		 * 					---- territoriesOwned
+		 * 					---- unitsOwned
+		 * 					---- didWin
+		 * 					---- myTurn
+		 * 
+		 * set + get UnitsOwned--------need to use
+		 * 
+		 * set + get DidWin------------need to use
+		 * 
+		 * set MyTurn------------------need to use
+		 * 
+		 * isMyTurn (returns boolean)--need to use
+		 * 
+		 * checkWin--------------------need to use
+		 * 
+		 * toString--------------------need to use---- probably 1000000000000000000% unnecessary
+		 */
+		
+		
+		/*Fields not used   ---- Player array list-----still not used, IMO replace with player array, but others 
+		 * 						 might say otherwise
+		 * 						 Original plan was to have Player class initialize in Turn/configure with class?
+		 * 
+		 * 					---- Reinforcements... might only need to be used in Turn class... it is in the Turn Class?
+		 
+		 * turn.callReinforce();
+		 * Turn.callBattle();
+		 * Turn.callFortify();
+		 */
+	}
+}
