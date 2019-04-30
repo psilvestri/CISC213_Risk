@@ -1,0 +1,162 @@
+import java.util.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+//import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;//Button;
+//import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+//import javafx.scene.layout.Pane;
+//import javafx.scene.paint.Color;
+//import javafx.scene.shape.Line;
+//import javafx.scene.Group; 
+//import javafx.scene.shape.Polygon;
+//import javafx.scene.Cursor;
+//import javafx.scene.input.MouseEvent; 
+
+public class DropDownDemo extends Application { //implements EventHandler<ActionEvent>{
+
+	int troops;
+	int moving;
+	ChoiceBox<Integer> numberofDice;
+	ChoiceBox<Integer> numberofMoving;
+	Scanner kb;
+
+	public static void main(String[] args) {
+
+		launch(args);
+	}
+
+	public void start(Stage primaryStage) throws Exception {
+		
+		primaryStage.setTitle("ffffff");
+		
+		kb = new Scanner(System.in);
+
+		//Drop down for selecting Dice
+		numberofDice = new ChoiceBox<>();
+		
+		//Drop down for selecting Units to move
+		numberofMoving = new ChoiceBox<>();
+		
+		//prompts user to enter how many troops they have
+		setTroops();
+		
+		//prompts user to enter how many troops they would like to move
+		setMoving();
+		
+		//enter button, lambda extracts value that is selected in BOTH drop downs
+		Button enter = new Button("Enter");
+		enter.setOnAction(e -> getChoice(numberofDice));
+		
+		//clear button, lambda clears all values in BOTH drow downs
+		Button clear = new Button("Clear");
+		clear.setOnAction(e -> clearStuff());
+		
+		//doohickey layout I made, change as needed
+		VBox layout = new VBox();
+		layout.setPadding(new Insets(20, 20, 20, 20));
+		layout.getChildren().addAll(numberofDice, numberofMoving, enter, clear);
+		
+		Scene scene = new Scene(layout, 500, 500);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		//sets items in based on troops set by user
+		setChoiceBox(getTroops());
+		
+		//sets items in based on moving troops set by user
+		setMovingBox(getMoving());
+	}
+	
+	//clears both drop downs, adds 0 as the only item in both drop downs
+	public void clearStuff() {
+		//clear
+		numberofDice.getItems().clear();
+		numberofMoving.getItems().clear();
+		
+		//add 0 as the only item to both drop downs
+		numberofDice.getItems().add(0);
+		numberofMoving.getItems().add(0);
+	}
+	
+	//prompts for number of troops and sets it for when we decide how many dice the user gets to roll
+	public void setTroops() {
+		
+		System.out.println("How many troops?");
+		troops = kb.nextInt();
+	}
+	
+	//prompts for number of troops the user would like to move, closes scanner
+	public void setMoving() {
+		
+		System.out.println("How many units are you moving?");
+		moving = kb.nextInt();
+		kb.close();
+	}
+	
+	//returns troops integer
+	public int getTroops() {
+		return troops;
+	}
+	
+	//returns moving troops integer
+	public int getMoving() {
+		return moving;
+	}
+	
+	//sets choice box to the number of dice the user may roll
+	//based off number of troops user has
+	public void setChoiceBox(int troops) {
+		
+		if(troops == 1) {
+			
+			numberofDice.setValue(0);
+		}
+		else if (troops == 2) {
+			
+			numberofDice.getItems().addAll(troops);
+		}
+		else {
+				
+			numberofDice.getItems().addAll(2, 3);
+			}
+	}
+	
+	//sets moving troops box based off number of troops user has
+	public void setMovingBox(int moving) {
+		
+		if(moving == 1) {
+			
+			numberofMoving.getItems().addAll(1);
+			numberofMoving.setValue(1);
+		}
+		else if (troops == 2) {
+				
+			numberofMoving.getItems().addAll(1, 2);
+		}
+		else {
+			
+			numberofMoving.getItems().addAll(1, 2, 3);
+			}
+	}
+	
+	//method to extract values from BOTH drop down boxes
+	private void getChoice(ChoiceBox<Integer> numberofDice) {
+		
+		//get value from BOTH drop down boxes
+		int Dchoice = numberofDice.getValue();
+		int Mchoice = numberofMoving.getValue();
+		
+		//print line each value from drop downs
+		System.out.println(Dchoice);
+		System.out.println(Mchoice);
+	}
+}
+
+
