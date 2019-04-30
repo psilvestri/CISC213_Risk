@@ -31,5 +31,13 @@ public class Territory implements TerritoryFinals {
 		}
 		return temp;
 	}
+	
+	public Double getLabelPoints(int index, int xOrY) {
+		Double[] temp = new Double[2];
+		for (int i = 0; i < 2; i++) {
+			temp[i] = points[index][i];
+		}
+		return temp[xOrY];
+	}
 
 }

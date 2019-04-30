@@ -69,6 +69,8 @@ public class Player {
 		return false;
 	}
 	
-	
+	public int terNums () {
+		return tersOwned.size();
+	}
 
 }
