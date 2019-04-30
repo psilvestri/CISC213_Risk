@@ -1,6 +1,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -40,7 +41,30 @@ public class polyButton extends Application {
 	int re = -1;
 	int turn = 0;
 
-	
+	private void randomizeTerritories() {
+
+		Random rand = new Random();
+
+		ArrayList<Integer> territoryNumber = new ArrayList<Integer>();
+		int tracker;
+		for (int i = 0; i < ters.length; i++) {
+			territoryNumber.add(i);
+		}
+		int x = 0;
+		while (territoryNumber.get(0) != null) {
+			tracker = rand.nextInt(4);
+			for (int i = 0; i < territoryNumber.size(); i++) {
+				if (territoryNumber.get(i) == tracker) {
+					players[x].terWon(tracker);
+					territoryNumber.remove(i);
+
+					++x;
+				}
+			}
+			x %= pNum;
+		}
+
+	}
 	
 	@Override
 	public void start(Stage stage) {
