@@ -55,11 +55,11 @@ public class Battle {
 	}
 
 	// method for printing the arrays for testing
-	public void printArrays(int atk, int def) {
-		for (int i = 0; i < atk; i++) {
+	public void printArrays() {
+		for (int i = 0; i < 3; i++) {
 			System.out.println(attack.get(i));
 		}
-		for (int i = 0; i < def; i++) {
+		for (int i = 0; i < 2; i++) {
 			System.out.println(defense.get(i));
 		}
 	}
