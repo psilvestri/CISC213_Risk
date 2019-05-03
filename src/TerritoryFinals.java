@@ -70,6 +70,87 @@ public interface TerritoryFinals {
 	};
 	
 	
+	boolean[][] adjacency = {
+			//can beta attack golf? tango?
+		
+		
+				//alpha
+				//alpha** beta  char  delta  echo  fox   golf   L	  M		No     O	 Papa	Q	  R		 S		T		U	V		Whiskey
+				{false, true, false, true, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false},
+				
+				//beta
+				//alpha beta** char  delta  echo  fox   golf   L	  M		 No       O	   Papa	  Q	     R		 S		T		U	V	  Whiskey
+				{true, false, true, true, false, false, true, false, false, false, false, false, false, false, false, true, true, true, false},
+				
+				//c
+				//alpha  beta  char** delta  echo   fox   golf   L	     M		No     O	Papa	 Q	    R	  S		 T		U	  V	   Whiskey
+				{false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false},
+				
+				//delta
+				//alpha beta char  delta**  echo  fox   golf   L	  M		No     O	 Papa	Q	  R		 S		T		U	V		Whiskey
+				{true, true, true, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false},
+				
+				//echo
+				//alpha  beta  char   delta  echo   fox    golf   L	     M		No     O	 Papa	 Q	    R		S	  T		 U	    V	 Whiskey
+				{false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false},
+				
+				//fox
+				//alpha  beta  char  delta   echo  fox    golf   L	    M		No     O	 Papa	Q	  R		 S		T		U	   V	 Whiskey
+				{false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false},
+				
+				//golf
+				//alpha  beta  char  delta  echo    fox   golf   L	  M		No     O	 Papa	Q	  R		 S		T		U	V		Whiskey
+				{true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false},
+				
+				//l
+				//alpha beta  char   delta  echo   fox     golf   L	     M		No     O	 Papa	Q	    R		S	  T		U	    V	  Whiskey
+				{true, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false},
+				
+				//M
+				//alpha  beta  char  delta  echo  fox   golf   L	  M		No     O	 Papa	Q	  R		 S		T		U	V		Whiskey
+				{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+				
+				//November
+				//alpha  beta  char   delta  echo    fox   golf    L	  M		No     O   Papa	  Q	    R	   S		T	  U	     V	  Whiskey
+				{false, false, false, false, false, false, false, true, true, false, true, true, true, false, false, false, false, false, false},
+				
+				//o
+				//alpha  beta  char  delta   echo    fox   golf     L	  M		No     O	Papa	Q	  R		 S		T	 U	   V	  Whiskey
+				{false, false, false, false, false, false, false, false, true, true, false, true, true, true, false, false, false, false, false},
+				
+				//Papa
+				//alpha  beta  char   delta  echo    fox   golf   L	      M		 No     O	 Papa	 Q	   R	  S	  T	    U	     V		Whiskey
+				{false, false, false, false, false, false, false, false, false, true, true, false, true, true, true, false, false, false, false},
+				
+				//Q
+				//alpha  beta  char   delta  echo    fox   golf   L	      M		No     O	Papa	 Q	   R	 S		T	  U	     V		Whiskey
+				{false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, true, false},
+				
+				//R
+				//alpha  beta  char   delta  echo    fox   golf    L	  M		No     O	 Papa	  Q	    R	  S		T	   U	   V	Whiskey
+				{false, false, false, false, false, false, false, false, false, false, true, true, false, false, true, false, false, false, false},
+				
+				//Sierra
+				//alpha  beta  char   delta  echo   fox     golf   L	  M		No     O	 Papa	Q	  R		 S		T		U	   V   Whiskey
+				{false, false, false, false, false, false, false, false, false, false, true, true, true, true, false, false, false, false, true},
+				
+				//T
+				//alpha  beta  char  delta   echo  fox     golf   L	     M		No     O	 Papa	Q	    R		 S		T	  U	    V		Whiskey
+				{false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false},
+				
+				//Uniform
+				//alpha  beta  char  delta  echo    fox   golf   L	     M		No     O	 Papa	 Q	    R		S	 T	   U	   V	Whiskey
+				{false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, true},
+				
+				//Victor
+				//alpha beta  char  delta  echo    fox    golf   L	    M		No     O	 Papa	Q	   R	   S	  T		U	  V	   Whiskey
+				{false, true, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, true},
+				
+				//Whiskey
+				//alpha  beta  char   delta   echo  fox     golf   L	  M		 No     O	   Papa	  Q	     R		 S	  T	     U	    V	 Whiskey
+				{false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, true, false}
+	};
+	
 	final Double[][] textBoxPoints = {
 			
 	};

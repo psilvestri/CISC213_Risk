@@ -89,6 +89,8 @@ public class polyButton extends Application {
 		// Setting title to the Stage
 		stage.setTitle("Risk Test");
 
+		
+		
 		// Adding scene to the stage
 		stage.setScene(updateMap());
 
