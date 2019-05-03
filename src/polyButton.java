@@ -24,7 +24,7 @@ public class polyButton extends Application {
 	Label[] unitText = new Label[19];
 	Button endPhase = new Button();
 	Button confirm = new Button();
-	Button start = new Button();
+	Button start = new Button("Start");
 	Reinforce r = new Reinforce();
 	ChoiceBox<Integer> numofDiceA = new ChoiceBox<>();
 	ChoiceBox<Integer> numofDiceD = new ChoiceBox<>();
@@ -89,8 +89,6 @@ public class polyButton extends Application {
 		// Setting title to the Stage
 		stage.setTitle("Risk Test");
 
-		
-		
 		// Adding scene to the stage
 		stage.setScene(updateMap());
 
@@ -264,19 +262,20 @@ public class polyButton extends Application {
 
 	public Scene updateMap() {
 
-		endPhase.setLayoutX(500);
-		endPhase.setLayoutY(300);
-		confirm.setLayoutX(400);
-		confirm.setLayoutY(300);
-		start.setLayoutX(300);
+		endPhase.setLayoutX(1200);
+		endPhase.setLayoutY(900);
+		confirm.setLayoutX(1000);
+		confirm.setLayoutY(900);
+		start.setLayoutX(900);
+		start.setLayoutY(900);
 		
 		
-		numofDiceA.setLayoutX(300);
-		numofDiceA.setLayoutY(300);
-		numofDiceD.setLayoutX(200);
-		numofDiceD.setLayoutY(300);
-		numUnits.setLayoutX(100);
-		numUnits.setLayoutY(300);
+		numofDiceA.setLayoutX(800);
+		numofDiceA.setLayoutY(750);
+		numofDiceD.setLayoutX(900);
+		numofDiceD.setLayoutY(750);
+		numUnits.setLayoutX(1000);
+		numUnits.setLayoutY(750);
 
 		endPhase.setText("End phase");
 		confirm.setText("Confirm");
@@ -292,6 +291,7 @@ public class polyButton extends Application {
 		root.getChildren().add(numofDiceA);
 		root.getChildren().add(numofDiceD);
 		root.getChildren().add(numUnits);
+		root.getChildren().add(start);
 		Scene map = new Scene(root, 600, 500);
 		return map;
 	}
@@ -303,6 +303,9 @@ public class polyButton extends Application {
 	}
 	
 	public void diceChoice(int diceA, int diceB) {
+		numofDiceA.getItems().clear();
+		numofDiceD.getItems().clear();
+		
 		
 			if(diceA == 1) {
 				numofDiceA.getItems().clear();
