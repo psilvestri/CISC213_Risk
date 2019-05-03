@@ -18,10 +18,10 @@ import javafx.stage.Stage;
 
 public class polyButton extends Application {
 
-	Polygon[] polygon = new Polygon[5];
-	Territory[] ters = new Territory[5];
+	Polygon[] polygon = new Polygon[19];
+	Territory[] ters = new Territory[19];
 	Player[] players = new Player[2];
-	Label[] unitText = new Label[5];
+	Label[] unitText = new Label[19];
 	Button endPhase = new Button();
 	Button confirm = new Button();
 	Button start = new Button();
@@ -46,7 +46,7 @@ public class polyButton extends Application {
 	public void start(Stage stage) {
 
 		// arrays for polygon, territories and text are populated with objects
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 19; i++) {
 			polygon[i] = new Polygon();
 			ters[i] = new Territory();
 			unitText[i] = new Label();
@@ -58,8 +58,8 @@ public class polyButton extends Application {
 
 		// populates the points from territory class to polygon objects also creates
 		// territory borders.
-		for (int i = 0; i < 5; i++) {
-			polygon[i].getPoints().addAll(ters[i].getPoints(i));
+		for (int i = 0; i < ters[0].getPoints().length; i++) {
+			polygon[i].getPoints().addAll(ters[i].getThePoints(i));
 			polygon[i].setStroke(Color.BLACK);
 			unitText[i].setLayoutX(ters[i].getLabelPoints(i, 0));
 			unitText[i].setLayoutY(ters[i].getLabelPoints(i, 1));
@@ -205,7 +205,7 @@ public class polyButton extends Application {
 					System.out.println("Battle");
 					System.out.println("Territory " + terA + " has " + ters[terA].getTroops() + "number of troops");
 					System.out.println("Territory " + terD + " has " + ters[terD].getTroops() + "number of troops");
-					b.printArrays(numofDiceA.getValue(),numofDiceD.getValue());
+					//b.printArrays(numofDiceA.getValue(),numofDiceD.getValue());
 					dropClear();
 					ters[terA].battleResult(b.getAttackLoss());
 					ters[terD].battleResult(b.getDefenseLoss());

@@ -23,13 +23,17 @@ public class Territory implements TerritoryFinals {
 	}
 
 	// method for getting the points for the polygons from the interface.
-	public Double[] getPoints(int index) {
+	public Double[] getThePoints(int index) {
 		// Temporary solution will not work with dynamic number of points per polygon.
-		Double[] temp = new Double[8];
-		for (int i = 0; i < 8; i++) {
+		Double[] temp = new Double[points[index].length];
+		for (int i = 0; i < points[index].length; i++) {
 			temp[i] = points[index][i];
 		}
 		return temp;
+	}
+	
+	public Double[][] getPoints(){
+		return points;
 	}
 	
 	public Double getLabelPoints(int index, int xOrY) {
@@ -38,6 +42,12 @@ public class Territory implements TerritoryFinals {
 			temp[i] = points[index][i];
 		}
 		return temp[xOrY];
+	}
+	
+	public void isAdjacent(Territory territory) {
+		
+		
+		
 	}
 
 }
