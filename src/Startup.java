@@ -11,16 +11,18 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Startup extends Application {
 
-	Button confirm;
-	String[] playerColors;
-	ChoiceBox<String> players, colors;
-	Text playerText, colorText;
-	int playerCount;
-	ArrayList[] playerTerritories;
+	private Button confirm;
+	private String[] playerColors;
+	private ChoiceBox<String> players, colors;
+	private Text playerText, colorText;
+	private int playerCount;
+	private ArrayList[] playerTerritories;
+	private boolean done = false;
 
 	public Startup() throws Exception {
 		confirm = new Button("Confirm");
@@ -30,8 +32,12 @@ public class Startup extends Application {
 		colorText = new Text("Pick Player1's color.");
 	}
 
-	@Override
-	public void start(Stage stage) throws Exception {
+	
+	public Stage show() {
+		
+		Stage stage = new Stage();
+		
+		stage.initModality(Modality.APPLICATION_MODAL);
 
 		playerText.setLayoutX(247);
 		playerText.setLayoutY(40);
@@ -69,6 +75,8 @@ public class Startup extends Application {
 						colors.getItems().remove(playerColors[i]);
 						if (i == playerColors.length - 1) {
 							stage.hide();
+							done = true;
+
 						}
 						break;
 					}
@@ -81,10 +89,11 @@ public class Startup extends Application {
 		pane.getChildren().addAll(confirm, colors, players, playerText, colorText);
 
 		Scene scene = new Scene(pane, 600, 300);
+		
 		stage.setTitle("Risk Setup (Chess)");
 		stage.setScene(scene);
-		stage.show();
-
+		
+		return stage;
 	}
 
 	// Getters and setters below!
@@ -97,6 +106,18 @@ public class Startup extends Application {
 	
 	public int getPlayerCount() {
 		return playerCount;
+	}
+	
+	public boolean getDone() {
+		return done;
+	}
+
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		stage.show();
+
+		
 	}
 
 	

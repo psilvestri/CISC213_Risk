@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,19 +5,18 @@ import javafx.scene.paint.Color;
 
 public class Player {
 
-	private Color pColor = null;
+	private String pColor = null;
 	private ArrayList<Integer> tersOwned = new ArrayList<Integer>();
 	int unplayedUnits = 0;
+	// Colors go blue, yellow, green, red
+	private final Color[] COLORS = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.RED};
 
-	Player(Color color) {
+	Player(String color) {
 		setpColor(color);
 	}
 
-	public Color getpColor() {
-		return pColor;
-	}
 
-	public void setpColor(Color pColor) {
+	public void setpColor(String pColor) {
 		this.pColor = pColor;
 	}
 
@@ -71,6 +68,20 @@ public class Player {
 	
 	public int terNums () {
 		return tersOwned.size();
+	}
+	
+	public Color getColor() {
+		if (pColor.equalsIgnoreCase("blue")) {
+			return COLORS[0];
+		} else if (pColor.equalsIgnoreCase("yellow")) {
+			return COLORS[1];
+		} else if (pColor.equalsIgnoreCase("green")) {
+			return COLORS[2];
+		}else if (pColor.equalsIgnoreCase("red")) {
+			return COLORS[3];
+		}else {
+			return Color.BLACK;
+		}
 	}
 
 }

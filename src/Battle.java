@@ -55,14 +55,7 @@ public class Battle {
 	}
 
 	// method for printing the arrays for testing
-	public void printArrays() {
-		for (int i = 0; i < 3; i++) {
-			System.out.println(attack.get(i));
-		}
-		for (int i = 0; i < 2; i++) {
-			System.out.println(defense.get(i));
-		}
-	}
+
 
 	// method for calculating the battle results. Number of attack and defense dice
 	// used are inputed into the method.
@@ -71,7 +64,8 @@ public class Battle {
 		// for
 		// loop is executed defDice number of times.
 		newAttack(atkDice, defDice);
-		for (int i = 0; i < defDice; i++) {
+		if (defDice < atkDice) {
+			for (int i = 0; i < defDice; i++) {
 			if (attack.get(i) > defense.get(i)) {
 				defenseLoss++;
 			} else if (attack.get(i) < defense.get(i)) {
@@ -79,7 +73,20 @@ public class Battle {
 			} else if (attack.get(i) == defense.get(i)) {
 				attackLoss++;
 			}
+			}
 		}
+		else if (atkDice < defDice) {
+			for (int i = 0; i < atkDice; i++) {
+				if (attack.get(i) > defense.get(i)) {
+					defenseLoss++;
+				} else if (attack.get(i) < defense.get(i)) {
+					attackLoss++;
+				} else if (attack.get(i) == defense.get(i)) {
+					attackLoss++;
+				}
+			}
+		}
+		
 	}
 
 	// Getters and setters

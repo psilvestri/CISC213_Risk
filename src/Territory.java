@@ -1,7 +1,7 @@
 
 
 public class Territory implements TerritoryFinals {
-	private int troops = 0;
+	private int troops = 10;
 
 	public void battleResult(int unitLoss) {
 		troops = troops - unitLoss;
@@ -39,14 +39,16 @@ public class Territory implements TerritoryFinals {
 	public Double getLabelPoints(int index, int xOrY) {
 		Double[] temp = new Double[2];
 		for (int i = 0; i < 2; i++) {
-			temp[i] = points[index][i];
+			temp[i] = labelPoints[index][i];
 		}
+		System.out.println(temp[xOrY]);
 		return temp[xOrY];
+		
 	}
 	
-	public void isAdjacent(Territory territory) {
+	public boolean isAdjacent(int a, int d) {
 		
-		
+		return adjacency[a][d];
 		
 	}
 
